@@ -1,25 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
+import React, {useState, useEffect} from 'react'
 
-function App() {
+export default function Clock() {
+  const [time, setTime] = useState(new Date())
+
+  useEffect(() => {
+    console.log('componentdidmount');
+    const id = setInterval(() => {
+      setTime(new Date());
+    },1000);
+
+    return () => {
+      console.log('componentwillunmount');
+      clearInterval(id);
+    };
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{margin: '30px'}}>
+      {time.toLocaleTimeString()}
     </div>
-  );
+  )
 }
 
-export default App;
